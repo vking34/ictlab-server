@@ -3,21 +3,16 @@ let express = require('express');
 let path = require('path');
 let cookieParser = require('cookie-parser');
 let logger = require('morgan');
-let jsSHA = require('jssha');
-let btoa = require('btoa');
+
 let http = require('http');
 let https = require('https');
 let fs = require('fs');
 const cors = require("cors");
 const bodyParser = require("body-parser");
 
-let MongoClient = require('mongodb').MongoClient;
-let url = 'mongodb://localhost:27017/';
-
 var corsOptions = {
     origin: "http://localhost:3000"
 };
-
 
 let applicationId = "ee63a5.vidyo.io";
 let developerKey = "82b1d62562c04380b8aa5656211d737a";
@@ -67,13 +62,13 @@ db.mongoose
         process.exit();
     });
 
-app.get('/token', (req, res) => {
-    let thirtyMinutes = 30 * 60;
-    let response = {
-        token: generateToken(thirtyMinutes)
-    };
-    res.json(response);
-})
+// app.get('/token', (req, res) => {
+//     let thirtyMinutes = 30 * 60;
+//     let response = {
+//         token: generateToken(thirtyMinutes)
+//     };
+//     res.json(response);
+// })
 
 // app.get('/rooms', (req, res) => {
 //     let room = {
@@ -97,6 +92,7 @@ app.get('/token', (req, res) => {
 // app.listen(port, () => console.log(`Listening on port ${port}!`))
 
 require('./routes/room.route.js')(app);
+require('./routes/token.route.js')(app);
 
 const http_port = 3000;
 const https_port = 8443;
